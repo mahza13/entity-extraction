@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Polimetro</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="http://lib.aga.my/font/segoeui/segoeui.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <div id="maindiv" style="width:100%;height:100%">
+            <svg id="mainsvg" height="100%" width="100%">
+            <g id="g-view" transform="translate(0,0)"></g>
+            <g id="main-g" transform="translate(0,0)"></g>
+            <g id="h-view" transform="translate(0,0)"></g>
+            </svg>
+        </div>
+        <script src="../script/js/com/jquery-1.11.3.min.js" type="text/javascript"></script>
+        <script src="../script/js/com/d3.min.js" type="text/javascript"></script>
+        <script src="../script/js/com/elasticsearch.jquery.min.js" type="text/javascript"></script>
+        
+        
+        
+        
+        <script src="../script/js/aga/aga.1.js" type="text/javascript"></script>
+        <script src="icon.js" type="text/javascript"></script>
+        <script src="main.js" type="text/javascript"></script>
+        
+         <!--authentication check-->
+        <script type="text/javascript">
+            var clientCallBackSuccessFunction = function(SSO) {
+                //console.log(SSO);
+                if (SSO.RESPONSE.fail === 1) {
+                    alert(SSO.RESPONSE.message);
+                } else if (SSO.RESPONSE.success === 1) {
+                   console.log(SSO.RESPONSE);
+                   var p = SSO.RESPONSE.locations[0];
+                    teritory.stateid = 10; //p.state_id;
+                    teritory.parid = 0; //p.parliament_id;
+                    teritory.dunid = 0; //p.dun_id;
+                }
+            };
+
+            var clientCallBackFailFunction = function(message) {
+                window.location.href = 'http://sso2.aga.my';
+            };
+        </script>
+        <script src="http://sso2.aga.my/services/javascript/2.0/120"></script>
+
+        <script src="app/pilihanraya.js" type="text/javascript"></script>
+        <script src="app/peristiwa.js" type="text/javascript"></script>
+        <script src="app/kategori_pengundi.js" type="text/javascript"></script>
+        <script src="app/sosial.js" type="text/javascript"></script>
+
+        <script src="init.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            client = ESClient([
+                document.location.host,
+                '/_es/151/'
+            ].join(''));
+
+            $(document).ready(function() {
+                d3.select('#maindiv')
+                        .style({
+                            position: 'absolute',
+                            top: 100,
+                            bottom: 0,
+                            width: '100%',
+                            height: '100%',
+                            background: '#000',
+                            color: '#111'
+                        });
+                        
+                        
+
+                $(window).on('resize', function() {
+                    __win_resize__();
+                });
+
+                $(window).trigger('resize');
+
+                __init__();
+                __win_resize__();
+            });
+        </script>
+    </body>
+</html>
